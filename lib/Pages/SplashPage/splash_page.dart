@@ -27,9 +27,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
         child: Image.network(
-            'https://w7.pngwing.com/pngs/227/9/png-transparent-logo-icon-green-leaf-logo-design-other-free-logo-design-template-leaf-thumbnail.png'),
+            'https://static.vecteezy.com/system/resources/thumbnails/004/572/128/small/invoice-line-icon-logo-illustration-free-vector.jpg'),
       ),
     );
   }

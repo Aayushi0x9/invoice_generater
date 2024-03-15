@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoice_generater/utils/routes_utils.dart';
 
 import '../../Global/global.dart';
 
@@ -23,7 +24,7 @@ class _HomePageState extends State<HomePage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Invoice Generater'),
+          title: const Text('Invoice Generater'),
           centerTitle: true,
           backgroundColor: Colors.white,
         ),
@@ -39,10 +40,11 @@ class _HomePageState extends State<HomePage> {
                   const Text("Let's Join Bill together"),
                   const Divider(color: Colors.blueGrey),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-                        padding: EdgeInsets.all(15),
-                        height: h * 0.55,
+                        padding: const EdgeInsets.all(15),
+                        height: h * 0.67,
                         width: w * 0.46,
                         color: Colors.white30,
                         child: Column(
@@ -57,9 +59,9 @@ class _HomePageState extends State<HomePage> {
                             ),
                             SizedBox(height: h * 0.006),
                             Container(
-                              height: h * 0.055,
+                              height: h * 0.056,
                               width: w * 0.4,
-                              padding: EdgeInsets.all(5),
+                              padding: const EdgeInsets.all(5),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   border: Border.all(color: Colors.blueGrey)),
@@ -175,7 +177,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       Container(
-                        height: h * 0.55,
+                        height: h * 0.67,
                         width: w * 0.455,
                         color: Colors.white30,
                         padding: const EdgeInsets.all(10),
@@ -332,15 +334,27 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                   ),
-                  FloatingActionButton.extended(
-                    onPressed: () {
-                      bool validated = formKey.currentState!.validate();
-                      if (validated) {
-                        formKey.currentState!.save();
-                      }
-                    },
-                    icon: Icon(Icons.save),
-                    label: Text('Save'),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      FloatingActionButton.extended(
+                        onPressed: () {
+                          bool validated = formKey.currentState!.validate();
+                          if (validated) {
+                            formKey.currentState!.save();
+                          }
+                        },
+                        icon: Icon(Icons.save),
+                        label: Text('Save'),
+                      ),
+                      FloatingActionButton.extended(
+                        onPressed: () {
+                          Navigator.of(context).pushNamed(MyRotes.itemPage);
+                        },
+                        icon: Icon(Icons.save),
+                        label: Text('Next'),
+                      ),
+                    ],
                   ),
                 ],
               ),

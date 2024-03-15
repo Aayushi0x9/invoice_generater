@@ -70,7 +70,7 @@ class _ItemPageState extends State<ItemPage> {
                             Globals.globals.items.remove('');
                             setState(() {});
                           },
-                          icon: Icon(Icons.delete_outline),
+                          icon: const Icon(Icons.delete_outline),
                         ),
 
                         //no.
@@ -93,7 +93,7 @@ class _ItemPageState extends State<ItemPage> {
                           child: TextFormField(
                             controller: Globals.globals.itemController[index],
                             onSaved: (val) {
-                              Globals.globals.o_name = val;
+                              Globals.globals.item_name = val;
                             },
                             initialValue: Globals.globals.o_name,
                             keyboardType: TextInputType.name,
@@ -113,7 +113,7 @@ class _ItemPageState extends State<ItemPage> {
                           child: TextFormField(
                             controller: Globals.globals.itemController[index],
                             onSaved: (val) {
-                              Globals.globals.o_name = val;
+                              // Globals.globals.= val;
                             },
                             initialValue: Globals.globals.o_name,
                             keyboardType: TextInputType.name,

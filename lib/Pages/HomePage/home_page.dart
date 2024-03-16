@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Container(
                         padding: const EdgeInsets.all(15),
-                        height: h * 0.67,
+                        height: h * 0.81,
                         width: w * 0.46,
                         color: Colors.white30,
                         child: Column(
@@ -127,6 +127,31 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             SizedBox(height: h * 0.01),
+                            TextFormField(
+                              onSaved: (val) {
+                                Globals.globals.o_email = val;
+                              },
+                              validator: (val) => val!.isEmpty
+                                  ? 'Must Enter Your Email'
+                                  : RegExp(r'''[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?''')
+                                          .hasMatch(val)
+                                      ? null
+                                      : 'Invalid Email',
+                              initialValue: Globals.globals.o_email,
+                              keyboardType: TextInputType.emailAddress,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                hintText: 'owner@gmail.com',
+                                hintStyle: TextStyle(
+                                  fontSize: 12,
+                                ),
+                                label: Text('email'),
+                                prefixIcon: Icon(Icons.email_rounded),
+                              ),
+                            ),
+                            SizedBox(height: h * 0.01),
                             //Address
                             TextFormField(
                               onSaved: (val) {
@@ -173,11 +198,26 @@ class _HomePageState extends State<HomePage> {
                                     const Icon(Icons.phone_android_rounded),
                               ),
                             ),
+                            TextFormField(
+                              onSaved: (val) {
+                                Globals.globals.o_Gstin = val;
+                              },
+                              initialValue: Globals.globals.o_cmyname,
+                              decoration: InputDecoration(
+                                prefixIcon: const Icon(
+                                    Icons.confirmation_number_outlined),
+                                label: const Text('GSTIn'),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: h * 0.01),
                           ],
                         ),
                       ),
                       Container(
-                        height: h * 0.67,
+                        height: h * 0.81,
                         width: w * 0.455,
                         color: Colors.white30,
                         padding: const EdgeInsets.all(10),
@@ -283,6 +323,31 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             SizedBox(height: h * 0.01),
+                            TextFormField(
+                              onSaved: (val) {
+                                Globals.globals.c_email = val;
+                              },
+                              validator: (val) => val!.isEmpty
+                                  ? 'Must Enter Your Email'
+                                  : RegExp(r'''[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?''')
+                                          .hasMatch(val)
+                                      ? null
+                                      : 'Invalid Email',
+                              initialValue: Globals.globals.o_email,
+                              keyboardType: TextInputType.emailAddress,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                hintText: 'company@gmail.com',
+                                hintStyle: TextStyle(
+                                  fontSize: 12,
+                                ),
+                                label: Text('email'),
+                                prefixIcon: Icon(Icons.email_rounded),
+                              ),
+                            ),
+                            SizedBox(height: h * 0.01),
                             //Customer Address
                             TextFormField(
                               onSaved: (val) {
@@ -327,6 +392,20 @@ class _HomePageState extends State<HomePage> {
                                 label: const Text('Contact'),
                                 prefixIcon:
                                     const Icon(Icons.phone_android_rounded),
+                              ),
+                            ),
+                            TextFormField(
+                              onSaved: (val) {
+                                Globals.globals.c_Gstin = val;
+                              },
+                              initialValue: Globals.globals.o_cmyname,
+                              decoration: InputDecoration(
+                                prefixIcon: const Icon(
+                                    Icons.confirmation_number_outlined),
+                                label: const Text('GSTIn'),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
                               ),
                             ),
                           ],

@@ -15,7 +15,7 @@ class _ItemPageState extends State<ItemPage> {
   @override
   void initState() {
     Globals.globals.items
-        .map((e) => {Globals.globals.Total += Globals.globals.items})
+        // .map((e) => {Globals.globals.Total += Globals.globals.items})
         .toList();
     super.initState();
   }
@@ -35,6 +35,12 @@ class _ItemPageState extends State<ItemPage> {
           title: const Text('Add Items'),
           titleSpacing: 1,
           centerTitle: true,
+          actions: [
+            ElevatedButton(
+              onPressed: () {},
+              child: Text('PDF'),
+            ),
+          ],
         ),
         backgroundColor: Colors.blueGrey.shade50,
         body: Padding(

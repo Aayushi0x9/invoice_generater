@@ -10,13 +10,19 @@ class ItemPage extends StatefulWidget {
 }
 
 class _ItemPageState extends State<ItemPage> {
-  int Total = 0;
+  double totalPrice = 0.0;
+
+  double calculateBill() {
+    totalPrice = 0.0;
+    Globals.globals.items.forEach((element) {
+      totalPrice += (element['price'] * element['qty']);
+    });
+    return totalPrice;
+  }
 
   @override
   void initState() {
-    Globals.globals.items
-        // .map((e) => {Globals.globals.Total += Globals.globals.items})
-        .toList();
+    calculateBill();
     super.initState();
   }
 
@@ -62,7 +68,7 @@ class _ItemPageState extends State<ItemPage> {
                         ),
                       ),
                       child: const Text(
-                        '           No     Item Name      Qty      Price     Discount     Total',
+                        '           No      Item Name         Qty         Price            Total',
                         style: TextStyle(color: Colors.black),
                       ),
                     ),
@@ -91,8 +97,10 @@ class _ItemPageState extends State<ItemPage> {
                       Expanded(
                         flex: 1,
                         child: Container(
+                          padding: EdgeInsets.all(10),
                           height: h * 0.2,
-                          width: w * 0.1,
+                          width: w * 0.2,
+                          child: Text('${index + 1}'),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               border: Border.all(color: Colors.grey)),
@@ -103,13 +111,14 @@ class _ItemPageState extends State<ItemPage> {
                       ),
                       //item name
                       Expanded(
-                        flex: 3,
+                        flex: 4,
                         child: TextFormField(
                           controller: Globals.globals.itemController[index],
                           onChanged: (val) {
                             Globals.globals.items[index]['item name'] = val;
                           },
                           // initialValue: Globals.globals.item_name,
+                          textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.name,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
@@ -123,13 +132,14 @@ class _ItemPageState extends State<ItemPage> {
                       ),
                       //quantity
                       Expanded(
-                        flex: 1,
+                        flex: 2,
                         child: TextFormField(
                           // controller: Globals.globals.itemController[index],
                           onChanged: (val) {
                             Globals.globals.items[index]['qty'] = val;
                           },
                           // initialValue: Globals.globals.,
+                          textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
@@ -143,33 +153,14 @@ class _ItemPageState extends State<ItemPage> {
                       ),
                       //price
                       Expanded(
-                        flex: 2,
+                        flex: 3,
                         child: TextFormField(
                           // controller: Globals.globals.itemController[index]
                           onChanged: (val) {
                             Globals.globals.items[index]['price'] = val;
                           },
                           // initialValue: Globals.globals.o_name,
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: w * 0.01,
-                      ),
-                      //discount
-                      Expanded(
-                        flex: 2,
-                        child: TextFormField(
-                          // controller: Globals.globals.itemController[index],
-                          onChanged: (val) {
-                            Globals.globals.items[index]['discount'] = val;
-                          },
-                          // initialValue: Globals.globals.o_name,
+                          textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
@@ -183,13 +174,14 @@ class _ItemPageState extends State<ItemPage> {
                       ),
                       //ammount
                       Expanded(
-                        flex: 2,
+                        flex: 3,
                         child: TextFormField(
                           // controller: Globals.globals.itemController[index],
                           onChanged: (val) {
-                            Globals.globals.items[index]['total'] = val;
+                            Globals.globals.items[index]['total'] = totalPrice;
                           },
                           // initialValue: Globals.globals.o_name,
+                          textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
@@ -246,7 +238,11 @@ class _ItemPageState extends State<ItemPage> {
                 padding: EdgeInsets.all(10),
                 alignment: Alignment.centerLeft,
                 child: Column(
-                  children: [Text('Total : ')],
+                  children: [
+                    Text(
+                      "Total price: ${totalPrice}",
+                    )
+                  ],
                 ),
               ),
             ],

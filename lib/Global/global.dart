@@ -14,11 +14,15 @@ class Globals {
       'price': 0,
       'discount': 0,
       'total': 0,
+      'qtyController': TextEditingController(),
+      'priceController': TextEditingController(),
+      'totalController': TextEditingController(),
+      'itemController': TextEditingController(),
     }
   ];
-  List<TextEditingController> itemController = [
-    TextEditingController(),
-  ];
+  // List<TextEditingController> itemController = [
+  //   TextEditingController(),
+  // ];
 
   static Globals globals = Globals();
 }

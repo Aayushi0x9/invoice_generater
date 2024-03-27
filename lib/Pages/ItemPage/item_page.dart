@@ -10,24 +10,21 @@ class ItemPage extends StatefulWidget {
 }
 
 class _ItemPageState extends State<ItemPage> {
-  double totalPrice = 0.0;
+  List total = [];
+  double allTotal = 0;
 
-  double calculateBill() {
-    totalPrice = 0.0;
-    Globals.globals.items.forEach((element) {
-      totalPrice += (element['price'] * element['qty']);
-    });
-    return totalPrice;
-  }
-
-  @override
-  void initState() {
-    calculateBill();
-    super.initState();
-  }
+  // int  totalprice() {
+  //   Globals.globals.items.forEach((e) {
+  //     allTotal = int.parse(e['qtyController'].text.toString()) *
+  //         int.parse(e['priceController'].text.toString());
+  //   });
+  //
+  //   return allTotal;
+  // }
 
   @override
   Widget build(BuildContext context) {
+    GlobalKey<FormState> formKey = GlobalKey<FormState>();
     Size size = MediaQuery.of(context).size;
     double h = size.height;
     double w = size.width;
@@ -43,8 +40,10 @@ class _ItemPageState extends State<ItemPage> {
           centerTitle: true,
           actions: [
             ElevatedButton(
-              onPressed: () {},
-              child: Text('PDF'),
+              onPressed: () {
+                // Navigator.of(context).pushNamed(MyRotes.pdfPage);
+              },
+              child: const Text('PDF'),
             ),
           ],
         ),
@@ -68,7 +67,7 @@ class _ItemPageState extends State<ItemPage> {
                         ),
                       ),
                       child: const Text(
-                        '           No      Item Name         Qty         Price            Total',
+                        '           No        Item Name                  Qty               Price                   Total',
                         style: TextStyle(color: Colors.black),
                       ),
                     ),
@@ -77,28 +76,24 @@ class _ItemPageState extends State<ItemPage> {
               ),
               ...List.generate(
                 Globals.globals.items.length,
-                (index) => Container(
-                  padding: const EdgeInsets.only(left: 5, right: 5),
-                  height: h * 0.07,
-                  width: w,
-                  margin: const EdgeInsets.only(bottom: 5),
+                (index) => Form(
+                  key: formKey,
                   child: Row(
                     children: [
                       IconButton(
                         onPressed: () {
                           Globals.globals.items.removeAt(index);
-                          Globals.globals.itemController.removeAt(index);
+                          Globals.globals.items.removeAt(index);
                           setState(() {});
                         },
                         icon: const Icon(Icons.delete_outline),
                       ),
-
                       //no.
                       Expanded(
                         flex: 1,
                         child: Container(
                           padding: EdgeInsets.all(10),
-                          height: h * 0.2,
+                          height: h * 0.06,
                           width: w * 0.2,
                           child: Text('${index + 1}'),
                           decoration: BoxDecoration(
@@ -106,17 +101,17 @@ class _ItemPageState extends State<ItemPage> {
                               border: Border.all(color: Colors.grey)),
                         ),
                       ),
-                      SizedBox(
-                        width: w * 0.01,
-                      ),
+                      SizedBox(width: w * 0.01),
                       //item name
                       Expanded(
                         flex: 4,
                         child: TextFormField(
-                          controller: Globals.globals.itemController[index],
+                          controller: Globals.globals.items[index]
+                              ['itemController'],
                           onChanged: (val) {
                             Globals.globals.items[index]['item name'] = val;
                           },
+
                           // initialValue: Globals.globals.item_name,
                           textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.name,
@@ -127,16 +122,16 @@ class _ItemPageState extends State<ItemPage> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        width: w * 0.01,
-                      ),
+                      SizedBox(width: w * 0.01),
                       //quantity
                       Expanded(
                         flex: 2,
                         child: TextFormField(
-                          // controller: Globals.globals.itemController[index],
+                          controller: Globals.globals.items[index]
+                              ['qtyController'],
                           onChanged: (val) {
-                            Globals.globals.items[index]['qty'] = val;
+                            Globals.globals.items[index]['qty'] =
+                                int.parse(val);
                           },
                           // initialValue: Globals.globals.,
                           textInputAction: TextInputAction.next,
@@ -148,18 +143,26 @@ class _ItemPageState extends State<ItemPage> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        width: w * 0.01,
-                      ),
+                      SizedBox(width: w * 0.01),
                       //price
                       Expanded(
                         flex: 3,
                         child: TextFormField(
-                          // controller: Globals.globals.itemController[index]
-                          onChanged: (val) {
-                            Globals.globals.items[index]['price'] = val;
+                          controller: Globals.globals.items[index]
+                              ['priceController'],
+                          onFieldSubmitted: (value) {
+                            Globals.globals.items[index]['total'] =
+                                Globals.globals.items[index]['price'] *
+                                    Globals.globals.items[index]['qty'];
+                            setState(() {});
                           },
-                          // initialValue: Globals.globals.o_name,
+                          onChanged: (val) {
+                            Globals.globals.items[index]['price'] =
+                                int.parse(val);
+                            // Globals.globals.items[index]['total'] =
+                            //     Globals.globals.items[index]['price'] *
+                            //         Globals.globals.items[index]['qty'];
+                          },
                           textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
@@ -169,25 +172,21 @@ class _ItemPageState extends State<ItemPage> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        width: w * 0.01,
-                      ),
+                      SizedBox(width: w * 0.01),
                       //ammount
                       Expanded(
                         flex: 3,
-                        child: TextFormField(
-                          // controller: Globals.globals.itemController[index],
-                          onChanged: (val) {
-                            Globals.globals.items[index]['total'] = totalPrice;
-                          },
-                          // initialValue: Globals.globals.o_name,
-                          textInputAction: TextInputAction.next,
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          height: h * 0.06,
+                          width: w * 0.2,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: Colors.grey),
                           ),
+                          alignment: Alignment.center,
+                          child:
+                              Text("${Globals.globals.items[index]['total']}"),
                         ),
                       ),
                       SizedBox(
@@ -205,14 +204,18 @@ class _ItemPageState extends State<ItemPage> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      Globals.globals.itemController
-                          .add(TextEditingController());
+                      // Globals.globals.itemController
+                      //     .add(TextEditingController(),
+                      // );
                       Globals.globals.items.add({
                         'item name': '',
                         'qty': '',
                         'price': '',
-                        'discount': '',
                         'total': '',
+                        'qtyController': TextEditingController(),
+                        'priceController': TextEditingController(),
+                        'totalController': TextEditingController(),
+                        'itemController': TextEditingController(),
                       });
                       setState(() {});
                     },
@@ -240,7 +243,7 @@ class _ItemPageState extends State<ItemPage> {
                 child: Column(
                   children: [
                     Text(
-                      "Total price: ${totalPrice}",
+                      "Total price: ${allTotal}",
                     )
                   ],
                 ),
